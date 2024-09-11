@@ -44,7 +44,8 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
+      list: [...this.state.list, { code: this.state.nextCode, title: 'Новая запись' }],
+      nextCode: this.state.nextCode +1, //Задание 2, в этом свойстве храним код следующей новой записи
     });
   }
 
@@ -69,6 +70,9 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+        } else {
+          //Задание 1, снимаем выделение с остальных записей
+          item.selected =false;
         }
         return item;
       }),
