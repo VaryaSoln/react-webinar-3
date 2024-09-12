@@ -5,6 +5,8 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.state.nextCode =  initState.list.length +1;
+    console.log ( this.nextCode);
   }
 
   /**
@@ -46,7 +48,9 @@ class Store {
       ...this.state,
       list: [...this.state.list, { code: this.state.nextCode, title: 'Новая запись' }],
       nextCode: this.state.nextCode +1, //Задание 2, в этом свойстве храним код следующей новой записи
+      
     });
+    console.log(this.state.nextCode);
   }
 
   /**
