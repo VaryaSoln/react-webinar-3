@@ -5,8 +5,8 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.state.nextCode =  initState.list.length +1;
-    console.log ( this.nextCode);
+    this.state.nextCode = initState.list.length + 1;
+    this.state.list.forEach((item) => { item.count = 0 });
   }
 
   /**
@@ -46,11 +46,9 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, { code: this.state.nextCode, title: 'Новая запись' }],
-      nextCode: this.state.nextCode +1, //Задание 2, в этом свойстве храним код следующей новой записи
-      
+      list: [...this.state.list, { code: this.state.nextCode, title: 'Новая запись', count: 0 }],
+      nextCode: this.state.nextCode + 1, //Задание 2, в этом свойстве храним код следующей новой записи
     });
-    console.log(this.state.nextCode);
   }
 
   /**
@@ -76,12 +74,34 @@ class Store {
           item.selected = !item.selected;
         } else {
           //Задание 1, снимаем выделение с остальных записей
-          item.selected =false;
+          item.selected = false;
         }
         return item;
       }),
     });
   }
+
+  /**
+     * Увеличить счетчик на 1 (Задание 3)
+     * @param code
+     */
+  updateCount(code) {
+    this.setState({
+      ...this.state,
+      list: this.state.list.map(item => {
+        if (item.code === code) {
+          item.count += 1;
+        }
+        return item;
+      }),
+    });
+  }
+
 }
+
+
+
+
+
 
 export default Store;

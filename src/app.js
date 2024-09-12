@@ -24,10 +24,17 @@ function App({ store }) {
             <div key={item.code} className="List-item">
               <div
                 className={'Item' + (item.selected ? ' Item_selected' : '')}
-                onClick={() => store.selectItem(item.code)}
+                onClick={() => {
+                  store.selectItem(item.code);
+                  store.updateCount(item.code);
+                
+                }}
               >
                 <div className="Item-code">{item.code}</div>
                 <div className="Item-title">{item.title}</div>
+
+                {item.count!==0 && <div className="Item-count">Выделяли {item.count} раз</div>}
+
                 <div className="Item-actions">
                   <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
                 </div>
