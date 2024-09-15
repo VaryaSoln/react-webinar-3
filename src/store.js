@@ -5,7 +5,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.state.nextCode = initState.list.length + 1;
+    this.state.nextCode = this.getMax() + 1;
     this.state.list.forEach((item) => { item.count = 0 });
   }
 
@@ -72,9 +72,14 @@ class Store {
       list: this.state.list.map(item => {
         if (item.code === code) {
           item.selected = !item.selected;
+
+          if (item.selected === true) {
+            this.updateCount(item.code);
+          }
         } else {
           //Задание 1, снимаем выделение с остальных записей
           item.selected = false;
+
         }
         return item;
       }),
@@ -97,7 +102,20 @@ class Store {
     });
   }
 
-}
+    /**
+     * Возвращает максимальное значение code;
+     */
+    getMax() {
+      let max = 0;
+      this.state.list.forEach((item)=>{
+        if (item.code > max){
+          max = item.code;
+        }
+      })
+      return max;
+    };
+
+  }
 
 
 

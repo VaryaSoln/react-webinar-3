@@ -26,13 +26,11 @@ function App({ store }) {
                 className={'Item' + (item.selected ? ' Item_selected' : '')}
                 onClick={() => {
                   store.selectItem(item.code);
-                  store.updateCount(item.code);
-
                 }}
               >
-                
-                  <div className="Item-code">{item.code}</div>
-                  <div className="Item-title">{item.title + (item.count !== 0 ? ` | Выделяли ${item.count} раз`: "")}</div>
+
+                <div className="Item-code">{item.code}</div>
+                <div className="Item-title">{item.title + (item.count !== 0 ? ` | Выделяли ${item.count} ${getEnding(item.count)}` : "")}</div>
 
                 <div className="Item-actions">
                   <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
@@ -45,5 +43,14 @@ function App({ store }) {
     </div>
   );
 }
+
+function getEnding(number) {
+  if ((number % 10 === 2 && number % 100 !== 12)
+    || (number % 10 === 3 && number % 100 !== 13)
+    || (number % 10 === 4 && number % 100 !== 14)) {
+    return "раза";
+  }
+  return "раз";
+};
 
 export default App;
