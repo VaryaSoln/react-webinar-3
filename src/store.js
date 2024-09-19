@@ -7,6 +7,8 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.state.basket = []; //Корзина
+    this.state.isBasketVisible = false; //видимость корзины
   }
 
   /**
@@ -83,6 +85,82 @@ class Store {
       }),
     });
   }
-}
+  /**
+   * Добавление товара в корзину
+   * @param code
+   */
+  addItemToBasket(code) {
+    const item = this.state.list.filter((item) => { return item.code === code })[0];//получает item
+    let isPresent = false;
+    this.state.basket.forEach((item) => {
+      if (item.code === code) {
+        isPresent = true;
+      }
+    });
 
+    if (isPresent === false) {
+      //добавить товар в корзину
+      this.setState({
+        ...this.state,
+        basket: [...this.state.basket, { ...item, count: 1 }],
+      });
+
+    } else {
+      //увеличить количество на 1 
+      this.setState({
+        ...this.state,
+        basket: this.state.basket.map((item) => {
+          if (item.code === code) {
+            return { ...item, count: ++item.count }
+          } else {
+            return item;
+          }
+        }),
+      });
+    }
+  }
+
+  /**
+   * Удаление товара из корзины
+   * @param code
+   */
+  deleteItemFromBasket(code) {
+    this.setState({
+      ...this.state,
+      basket: this.state.basket.filter((item) => {
+        return item.code !== code;
+      }),
+    });
+  }
+  /**
+     * Подсчет суммы заказа
+     * @returns Number
+     */
+  calcOrderSum() {
+    let orderSum = 0;
+    this.state.basket.forEach((item) => {
+      orderSum += item.price * item.count;
+    });
+    return orderSum;
+  }
+
+  /**
+     * Подсчет количества товаров
+     * @returns Number
+     */
+  calcOrderQuantity() {
+    return this.state.basket.length;
+  }
+  /**
+       * Изменить видимость корзины
+       * @param isVisible
+       */
+  changeBasketVisibility(isVisible) {
+    this.setState({
+      ...this.state,
+      isBasketVisible : isVisible,
+    });
+  }
+
+}
 export default Store;

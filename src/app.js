@@ -3,6 +3,7 @@ import List from './components/list';
 import Controls from './components/controls';
 import Head from './components/head';
 import PageLayout from './components/page-layout';
+import Basket from './components/basket';
 
 /**
  * Приложение
@@ -11,25 +12,29 @@ import PageLayout from './components/page-layout';
  */
 function App({ store }) {
   const list = store.getState().list;
+  const basket = store.getState().basket;
 
   const callbacks = {
-
-   /*  onSelectItem: useCallback(
-      code => {
-        store.selectItem(code);
-      },
-      [store],
-    ), */
+    onAddItemToBasket: (code)=>{
+      store.addItemToBasket(code);
+    },
+    onDeleteItemFromBasket: (code)=>{
+      store.deleteItemFromBasket(code);
+    },
+    onGoToBasket: ()=>{
+      store.changeBasketVisibility(true);
+    },
+    onCloseBasket: ()=>{
+      store.changeBasketVisibility(false);
+    }
   };
 
   return (
     <PageLayout>
-      <Head title="Приложение на чистом JS" />
-      <Controls />
-      <List
-        list={list}
-        
-      />
+      <Head title="Магазин" inCatalog={true}/>
+      <Controls quantity={store.calcOrderQuantity()} sum={store.calcOrderSum()} onGoToBasket={callbacks.onGoToBasket}/>
+      <List list={list} onAddItemToBasket={callbacks.onAddItemToBasket} inCatalog={true} />
+      <Basket basket={basket} sum={store.calcOrderSum()} onDeleteItemFromBasket={callbacks.onDeleteItemFromBasket} isVisible={store.state.isBasketVisible} onCloseBasket={callbacks.onCloseBasket}/>
     </PageLayout>
   );
 }
