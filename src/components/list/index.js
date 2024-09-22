@@ -9,7 +9,12 @@ function List({ list, onAddItemToBasket, onDeleteItemFromBasket, inCatalog }) {
     <div className="List">
       {list.map(item => (
         <div key={item.code} className="List-item">
-          <Item item={item} onAddItemToBasket={onAddItemToBasket} onDeleteItemFromBasket={onDeleteItemFromBasket} inCatalog={inCatalog} />
+          <Item
+            item={item}
+            onAddItemToBasket={onAddItemToBasket}
+            onDeleteItemFromBasket={onDeleteItemFromBasket}
+            inCatalog={inCatalog}
+          />
         </div>
       ))}
     </div>
@@ -27,8 +32,8 @@ List.propTypes = {
 };
 
 List.defaultProps = {
-  onDeleteItem: () => {},
-  onSelectItem: () => {},
+  onDeleteItem: () => { },
+  onSelectItem: () => { },
 };
 
 export default React.memo(List);

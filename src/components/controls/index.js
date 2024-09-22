@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
-import { plural } from '../../utils';
+import { plural, formatPrice } from '../../utils';
 
 
 function Controls({ quantity, sum, onGoToBasket }) {
@@ -13,7 +13,7 @@ function Controls({ quantity, sum, onGoToBasket }) {
 
     <div className="Controls">
       <div className="Controls-title">
-        {quantity === 0 ? "В корзине: пусто" : `В корзине: ${quantity} ${plural(quantity, { one: 'товар', few: 'товара', many: 'товаров' })} / ${sum} ₽`}
+        {quantity === 0 ? (<>В корзине: <span className="Controls-bold">пусто</span></>) : ( <>В корзине: <span className="Controls-bold"> {quantity} {plural(quantity, { one: 'товар', few: 'товара', many: 'товаров' })} / {formatPrice(sum)} </span></>)}
       </div>
       <button onClick={callbacks.onGo}>Перейти</button>
     </div>

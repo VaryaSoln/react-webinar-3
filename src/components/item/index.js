@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { plural } from '../../utils';
+import { formatPrice, plural } from '../../utils';
 import './style.css';
 
 function Item({ item, onAddItemToBasket, onDeleteItemFromBasket, inCatalog }) {
@@ -21,7 +21,7 @@ function Item({ item, onAddItemToBasket, onDeleteItemFromBasket, inCatalog }) {
         {item.title}
       </div>
       <div className="Item-price">
-        {`${item.price} ₽`}
+        {formatPrice(item.price)}
       </div>
       {inCatalog ? ("") : (<div className="Item-quant">
         {`${item.count} шт`}
@@ -39,16 +39,8 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
-    selected: PropTypes.bool,
-    count: PropTypes.number,
   }).isRequired,
-  onDelete: PropTypes.func,
-  onSelect: PropTypes.func,
 };
 
-Item.defaultProps = {
-  onDelete: () => { },
-  onSelect: () => { },
-};
 
 export default React.memo(Item);

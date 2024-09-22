@@ -9,6 +9,8 @@ class Store {
     this.listeners = []; // Слушатели изменений состояния
     this.state.basket = []; //Корзина
     this.state.isBasketVisible = false; //видимость корзины
+    this.state.basketSum = 0; //сумма заказа в корзине
+    this.state.basketQuantity = 0; //количество товаров в корзине
   }
 
   /**
@@ -118,6 +120,8 @@ class Store {
         }),
       });
     }
+    this.calcOrderSum();
+    this.calcOrderQuantity();
   }
 
   /**
@@ -131,6 +135,8 @@ class Store {
         return item.code !== code;
       }),
     });
+    this.calcOrderSum();
+    this.calcOrderQuantity();
   }
   /**
      * Подсчет суммы заказа
@@ -141,7 +147,10 @@ class Store {
     this.state.basket.forEach((item) => {
       orderSum += item.price * item.count;
     });
-    return orderSum;
+    this.setState({
+      ...this.state,
+      basketSum: orderSum,
+    }); 
   }
 
   /**
@@ -149,7 +158,11 @@ class Store {
      * @returns Number
      */
   calcOrderQuantity() {
-    return this.state.basket.length;
+    this.setState({
+      ...this.state,
+      basketQuantity: this.state.basket.length,
+    }); 
+    
   }
   /**
        * Изменить видимость корзины
@@ -158,7 +171,7 @@ class Store {
   changeBasketVisibility(isVisible) {
     this.setState({
       ...this.state,
-      isBasketVisible : isVisible,
+      isBasketVisible: isVisible,
     });
   }
 

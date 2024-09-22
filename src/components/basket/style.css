@@ -1,24 +1,3 @@
-.Basket-container {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    background-color:rgba(112, 109, 109, 0.4);
-    display: none;
-}
-
-.Basket {
-    padding: 100px;
-    background-color: white;
-    width: 500px;
-}
-
-.Basket-container_visible {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .Basket-total {
     display: flex;
@@ -26,8 +5,9 @@
     font-weight: bold;
     align-items: center;
 }
-
-.Basket-totalText {}
+.Basket-space{
+height: 68px;
+}
 
 .Basket-totalSum {
     padding: 20px 100px 20px 20px;

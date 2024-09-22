@@ -1,0 +1,24 @@
+.ModalPageLayout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(112, 109, 109, 0.4);
+    box-sizing: border-box;
+
+}
+
+.ModalPageLayout-center {
+    background-color: white;
+    width: 960px;
+    height: 407px;
+    border-radius: 10px 10px 10px 10px;
+
+}
+.ModalPageLayout_invisible{
+    display: none;
+}
