@@ -48,7 +48,6 @@ function Main() {
       <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
       <List list={select.list} renderItem={renders.item} />
       <PageNumber currentPage={select.currentPage} maxPage={select.maxPage} onPage={callbacks.onPage} />
-      <Card _id= "66d5f5b85816720f9b766f7d"/>
     </PageLayout>
   );
 }

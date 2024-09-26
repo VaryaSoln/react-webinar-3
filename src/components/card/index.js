@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import './style.css';
 import BasketTool from '../basket-tool';
 
 
-function Card({_id}) {
-    console.log("Рендерим Card");
+function Card() {
     const [data, setData] = useState({});
-    console.log(`что лежит в data.description: ${data.description}`)
+    const params = useParams();
     useEffect(() => {
         load();
     }, []);
 
     async function load() {
         console.log("Загружаем данные с сервера");
-        const response = await fetch(`/api/v1/articles/${_id}?fields=*,madeIn(title,code),category(title)`);
+        const response = await fetch(`/api/v1/articles/${params.cardId}?fields=*,madeIn(title,code),category(title)`);
         const json = await response.json();
         console.log(json);
         setData({

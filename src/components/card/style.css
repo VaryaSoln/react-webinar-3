@@ -1,3 +1,8 @@
+.Card{
+    background: #FFFFFF;
+    height: 100vh;
+
+}
 .Card-head {
     display: block;
     height: 80px;
