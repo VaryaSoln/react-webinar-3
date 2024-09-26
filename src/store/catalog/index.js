@@ -10,12 +10,45 @@ class Catalog extends StoreModule {
   initState() {
     return {
       list: [],
+      currentPage: 3,
+      maxPage: 25,
     };
   }
 
-  async load() {
-    const response = await fetch('/api/v1/articles');
+  /**
+   * Установка текущей страницы каталога
+   * @param page Номер страницы
+   */
+  setCurrentPage(page) {
+    this.setState(
+      {
+        ...this.getState(),
+        currentPage: page,
+
+      },
+      "Устанавливаем текущую страницу каталога"
+    )
+  }
+  /**
+ * Установка последней страницы каталога
+ * @param page Номер страницы
+ */
+  setMaxPage(page) {
+    this.setState(
+      {
+        ...this.getState(),
+        maxPage: page,
+
+      },
+      "Устанавливаем последнюю страницу каталога"
+    )
+  }
+
+  async load(currentPage) {
+    const response = await fetch(`/api/v1/articles?limit=10&skip=${10 * (currentPage - 1)}&fields=items(_id, title, price),count`);
     const json = await response.json();
+    console.log(json);
+    this.setMaxPage(Math.ceil(json.result.count/10));
     this.setState(
       {
         ...this.getState(),

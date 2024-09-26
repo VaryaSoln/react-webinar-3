@@ -1,0 +1,43 @@
+.Card-head {
+    display: block;
+    height: 80px;
+    background: #F5F5F5;
+}
+
+.Card-title {
+    margin: 0;
+    padding: 20px 20px 10px;
+}
+.Card-controls{
+    display: flex;
+    justify-content: space-between;
+}
+.Card-controls-link{
+    padding: 20px;
+}
+
+
+.Card-inform{
+    margin: 0 30px 0 30px;
+}
+.Card-inform-content{
+    font-size: Areal;
+    padding-bottom: 15px;
+}
+.Card-inform-madeIn{
+    font-size: Areal;
+    padding-bottom: 15px;
+}
+.Card-inform-category{
+    font-size: Areal;
+    padding-bottom: 15px;
+}
+.Card-inform-year{
+    font-size: Areal;
+    padding-bottom: 15px;
+}
+.Card-inform-price{
+    font-size: Areal;
+    padding-bottom: 15px;
+    font-weight: bold;
+}
