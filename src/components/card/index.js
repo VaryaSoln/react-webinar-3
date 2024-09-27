@@ -1,15 +1,17 @@
-import { useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import './style.css';
 import BasketTool from '../basket-tool';
+import useStore from '../../store/use-store';
 
 
-function Card() {
+function Card({onAdd, sum, amount, onOpen}) {
     const [data, setData] = useState({});
     const params = useParams();
+    console.log("Ренденим Card");
     useEffect(() => {
         load();
-    }, []);
+    },[params]);
 
     async function load() {
         console.log("Загружаем данные с сервера");
@@ -25,15 +27,18 @@ function Card() {
             price: json.result.price,
         });
     };
-   
+    const callbacks = {
+        onAdd: e => onAdd(params.cardId),
+      };
+  
     return (
         <div className="Card">
             <div className="Card-head">
                 <h1 className="Card-title">{data.title}</h1>
             </div>
             <div className="Card-controls">
-                <div className="Card-controls-link">Главная</div>
-                <BasketTool />
+                <div className="Card-controls-link"><Link to={`/`}>Главная</Link></div>
+                <BasketTool sum={sum} amount={amount} onOpen={onOpen}/>
             </div>
             <div className="Card-inform">
                 <div className="Card-inform-content">{data.description}</div>
@@ -42,10 +47,11 @@ function Card() {
                 <div className="Card-inform-year">Год выпуска: {data.year}</div>
                 <div className="Card-inform-price">Цена: {data.price}</div>
 
-                <button onClick>Добавить</button>
+                <button onClick={callbacks.onAdd}>Добавить</button>
             </div>
         </div>
     );
-}
+    }
+
 
 export default Card;

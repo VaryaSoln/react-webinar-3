@@ -4,18 +4,29 @@ import { numberFormat } from '../../utils';
 import { cn as bem } from '@bem-react/classname';
 import PropTypes from 'prop-types';
 import './style.css';
+import { useNavigate } from 'react-router-dom';
+
 
 function ItemBasket(props) {
+
+  const navigate = useNavigate();
   const cn = bem('ItemBasket');
 
   const callbacks = {
     onRemove: e => props.onRemove(props.item._id),
+    onItem: () => {
+      props.closeModal();
+      console.log("onItem");
+      navigate(`/cards/${props.item._id}`);
+    }
   };
 
   return (
     <div className={cn()}>
       {/*<div className={cn('code')}>{props.item._id}</div>*/}
-      <div className={cn('title')}><a href={`/cards/${props.item._id}`}>{props.item.title}</a></div>
+      <div className={cn('title')}>
+        <div className={cn('item')} onClick={callbacks.onItem}>{props.item.title}</div>
+      </div>
       <div className={cn('right')}>
         <div className={cn('cell')}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn('cell')}>{numberFormat(props.item.amount || 0)} шт</div>
@@ -38,7 +49,7 @@ ItemBasket.propTypes = {
 };
 
 ItemBasket.defaultProps = {
-  onRemove: () => {},
+  onRemove: () => { },
 };
 
 export default memo(ItemBasket);

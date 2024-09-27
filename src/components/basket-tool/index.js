@@ -4,7 +4,7 @@ import { cn as bem } from '@bem-react/classname';
 import { numberFormat, plural } from '../../utils';
 import './style.css';
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum, amount, onOpen}) {
   const cn = bem('BasketTool');
   return (
     <div className={cn()}>
