@@ -17,7 +17,8 @@ function ItemBasket(props) {
     onItem: () => {
       props.closeModal();
       console.log("onItem");
-      navigate(`/cards/${props.item._id}`);
+      /* navigate(`/cards/${props.item._id}`); */
+      navigate(props.address); 
     }
   };
 

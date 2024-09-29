@@ -8,6 +8,8 @@ import useStore from '../../store/use-store';
 import useSelector from '../../store/use-selector';
 import PageNumber from '../../components/ page-number';
 import Card from '../../components/card';
+import Nav from '../../components/nav';
+import './style.css';
 
 function Main() {
   const store = useStore();
@@ -36,7 +38,7 @@ function Main() {
   const renders = {
     item: useCallback(
       item => {
-        return <Item item={item} onAdd={callbacks.addToBasket} />;
+        return <Item item={item} onAdd={callbacks.addToBasket} address={`/cards/${item._id}`} />;
       },
       [callbacks.addToBasket],
     ),
@@ -45,7 +47,10 @@ function Main() {
   return (
     <PageLayout>
       <Head title="Магазин" />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
+      <div className="Main-controls">
+        <Nav />
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount} sum={select.sum} />
+      </div>
       <List list={select.list} renderItem={renders.item} />
       <PageNumber currentPage={select.currentPage} maxPage={select.maxPage} onPage={callbacks.onPage} />
     </PageLayout>
@@ -53,3 +58,4 @@ function Main() {
 }
 
 export default memo(Main);
+

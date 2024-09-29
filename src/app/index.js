@@ -8,6 +8,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Card from '../components/card';
+import PageLayout from '../components/page-layout';
+import Product from './product';
 
 
 
@@ -19,14 +21,14 @@ function App() {
 
   const select = useSelector(state => ({
     activeModal: state.modals.name,
-    sum: state.basket.sum,
-    amount: state.basket.amount,
+    /* sum: state.basket.sum,
+    amount: state.basket.amount, */
   }));
   const store = useStore();
-  const callbacks = {
+  /* const callbacks = {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     goToBasket: useCallback(() => store.actions.modals.open("basket"), [store]),
-  }
+  } */
   const router = createBrowserRouter([
     {
       path: "/",
@@ -40,7 +42,7 @@ function App() {
       path: "/cards/:cardId",
       element:
         <>
-          <Card onAdd={callbacks.addToBasket} onOpen={callbacks.goToBasket} sum={select.sum} amount={select.amount} />,
+          <Product />
           {select.activeModal === 'basket' && <Basket />}
         </>
     },
