@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import useStore from '../../hooks/use-store';
 import useTranslate from '../../hooks/use-translate';
 import useInit from '../../hooks/use-init';
@@ -11,12 +11,21 @@ import LocaleSelect from '../../containers/locale-select';
 import User from '../../components/user';
 import AuthTool from '../../components/auth-tool';
 import LoginForm from '../../components/login-form';
+import useSelector from '../../hooks/use-selector';
 
 /**
  * Главная страница - первичная загрузка каталога
  */
 function Main() {
   const store = useStore();
+
+  const callbacks = {
+    onExit: useCallback(() => store.actions.auth.exit(), []),
+  };
+  const selector = useSelector(state => ({
+    authorized: state.auth.authorized,
+    user: state.auth.user,
+  }));
 
   useInit(
     () => {
@@ -30,15 +39,17 @@ function Main() {
 
   return (
     <PageLayout>
-      <AuthTool />
+      <AuthTool
+        isAuthorized={selector.authorized}
+        name={selector.user ? selector.user.profile.name : ""}
+        onExit={callbacks.onExit}
+      />
       <Head title={t('title')}>
         <LocaleSelect />
       </Head>
       <Navigation />
       <CatalogFilter />
       <CatalogList />
-      <LoginForm />
-      <User />
     </PageLayout>
   );
 }

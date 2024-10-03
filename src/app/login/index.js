@@ -5,21 +5,36 @@ import LocaleSelect from '../../containers/locale-select';
 import Navigation from '../../containers/navigation';
 import PageLayout from '../../components/page-layout';
 import AuthTool from '../../components/auth-tool';
+import useSelector from '../../hooks/use-selector';
+import useStore from '../../hooks/use-store';
+
 function Login() {
- 
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("Текст ошибки от сервера");
+
+  const selector = useSelector(state => ({
+    error: state.auth.error,
+    authorized: state.auth.authorized,
+    user: state.auth.user,
+  }));
+
+  const store = useStore();
 
   const callbacks = {
-    onLoginChange: useCallback((login)=>setLogin(login), []),
-    onPasswordChange: useCallback((password)=>setPassword(password), []),
-    onEnter: useCallback(()=>{}, []),
+    onLoginChange: useCallback((login) => setLogin(login), []),
+    onPasswordChange: useCallback((password) => setPassword(password), []),
+    onEnter: useCallback(() => store.actions.auth.authorize(login, password), [login, password]),
+    onExit: useCallback(() => store.actions.auth.exit(), []),
   };
 
   return (
     <PageLayout>
-      <AuthTool isAuthorized={true} user="Varya"/>
+      <AuthTool
+        isAuthorized={selector.authorized}
+        name={selector.user ? selector.user.profile.name : ""}
+        onExit={callbacks.onExit}
+      />
       <Head title="Магазин">
         <LocaleSelect />
       </Head>
@@ -29,7 +44,7 @@ function Login() {
         password={password}
         onLoginChange={callbacks.onLoginChange}
         onPasswordChange={callbacks.onPasswordChange}
-        error={error}
+        error={selector.error}
         onEnter={callbacks.onEnter}
       />
     </PageLayout>

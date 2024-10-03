@@ -6,27 +6,35 @@ import Navigation from '../../containers/navigation';
 import PageLayout from '../../components/page-layout';
 import AuthTool from '../../components/auth-tool';
 import User from '../../components/user';
+import useSelector from '../../hooks/use-selector';
+import useStore from '../../hooks/use-store';
 
 function Profile() {
- 
-  /* const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("Текст ошибки от сервера");
 
+  const store= useStore();
   const callbacks = {
-    onLoginChange: useCallback((login)=>setLogin(login), []),
-    onPasswordChange: useCallback((password)=>setPassword(password), []),
-    onEnter: useCallback(()=>{}, []),
-  }; */
+    onExit: useCallback(() => store.actions.auth.exit(), []),
+  };
+
+  const selector = useSelector(state => ({
+    authorized: state.auth.authorized,
+    user: state.auth.user,
+  }));
 
   return (
     <PageLayout>
-      <AuthTool isAuthorized={true} user="User №1"/>
+     <AuthTool
+        isAuthorized={selector.authorized}
+        name={selector.user ? selector.user.profile.name : ""}
+        onExit={callbacks.onExit}
+      />
       <Head title="Магазин">
         <LocaleSelect />
       </Head>
       <Navigation />
-      <User name="User №1" phone="+70000000001" email="test_50@example.com"/>
+      {selector.user ?
+        (<User name={selector.user.profile.name} phone={selector.user.profile.phone} email={selector.user.email} />)
+        : (<></>)}
     </PageLayout>
   );
 }
