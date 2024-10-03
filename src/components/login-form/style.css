@@ -1,0 +1,30 @@
+.LoginForm {
+    margin-left: 20px;
+}
+
+.LoginForm-Form {
+    display: flex;
+    flex-direction: column;
+    width: 203px;
+}
+
+.LoginForm-UserLogin {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.LoginForm-Password {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.LoginForm-Error {
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.4px;
+    color: #FF0000;
+    margin-bottom: 15px;
+}

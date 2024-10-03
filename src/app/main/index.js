@@ -8,6 +8,9 @@ import Head from '../../components/head';
 import CatalogFilter from '../../containers/catalog-filter';
 import CatalogList from '../../containers/catalog-list';
 import LocaleSelect from '../../containers/locale-select';
+import User from '../../components/user';
+import AuthTool from '../../components/auth-tool';
+import LoginForm from '../../components/login-form';
 
 /**
  * Главная страница - первичная загрузка каталога
@@ -27,12 +30,15 @@ function Main() {
 
   return (
     <PageLayout>
+      <AuthTool />
       <Head title={t('title')}>
         <LocaleSelect />
       </Head>
       <Navigation />
       <CatalogFilter />
       <CatalogList />
+      <LoginForm />
+      <User />
     </PageLayout>
   );
 }

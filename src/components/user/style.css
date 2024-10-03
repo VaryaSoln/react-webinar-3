@@ -1,0 +1,18 @@
+.User {
+    margin-left: 20px;
+}
+
+.User-Name {
+    margin-bottom: 15px;
+}
+
+.User-Phone {
+    margin-bottom: 15px;
+}
+
+.User-Email {
+    margin-bottom: 15px;
+}
+.User-Bold{
+    font-weight: bold;
+}

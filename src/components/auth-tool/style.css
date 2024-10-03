@@ -1,0 +1,17 @@
+.AuthTool {
+    display: flex;
+    justify-content: right;
+    padding: 10px 20px;
+    align-items: center;
+}
+
+.AuthTool-User {
+    font-family: Arial;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 14.95px;
+    color: #0087E9;
+    margin-right: 20px;
+
+
+}
