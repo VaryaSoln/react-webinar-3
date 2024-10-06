@@ -11,6 +11,7 @@ import Spinner from '../../components/spinner';
 import ArticleCard from '../../components/article-card';
 import LocaleSelect from '../../containers/locale-select';
 import AuthTool from '../../components/auth-tool';
+import AuthToolContainer from '../../containers/auth-tool-container';
 
 /**
  * Страница товара с первичной загрузкой товара по id из url адреса
@@ -28,9 +29,6 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
-    authorized: state.auth.authorized,
-    user: state.auth.user,
-
   }));
 
   const { t } = useTranslate();
@@ -39,16 +37,11 @@ function Article() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
-    onExit: useCallback(() => store.actions.auth.exit(), []),
   };
 
   return (
     <PageLayout>
-      <AuthTool
-        isAuthorized={select.authorized}
-        name={select.user ? select.user.profile.name : ""}
-        onExit={callbacks.onExit}
-      />
+      <AuthToolContainer />
       <Head title={select.article.title}>
         <LocaleSelect />
       </Head>

@@ -5,8 +5,7 @@ class AuthState extends StoreModule {
         return {
             authorized: sessionStorage.getItem("token")? true : false,
             error: "",
-            token: "",
-            user: null,
+            userId: sessionStorage.getItem("userId")? sessionStorage.getItem("userId") : null,
         };
     }
 
@@ -20,11 +19,11 @@ class AuthState extends StoreModule {
             });
             const json = await response.json();
             sessionStorage.setItem('token', json.result.token);
+            sessionStorage.setItem('userId', json.result.user._id);
             this.setState({
                 ...this.getState(),
                 authorized: true,
-                token: json.result.token,
-                user: json.result.user,
+                userId: json.result.user._id,
             })
 
         } catch (e) {
@@ -37,8 +36,9 @@ class AuthState extends StoreModule {
     }
 
     async exit(){
-        console.log("exit");
+        console.log("----------exit");
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('userId');
         await fetch("/api/v1/users/sign", {
             method: "DELETE",
             headers: {

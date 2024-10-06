@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path={''} element={<Main />} />
         <Route path={'/articles/:id'} element={<Article />} />
-        {selector.authorized ? (<Route path={'/login'} element={<Navigate to="/" />} />):(<Route path={'/login'} element={<Login />} />)}
+        {selector.authorized ? (<Route path={'/login'} element={<Navigate to="/profile" />} />):(<Route path={'/login'} element={<Login />} />)}
         {selector.authorized ? (<Route path={'/profile'} element={<Profile />} />):(<Route path={'/profile'} element={<Navigate to="/login" />} />)}
 
       </Routes>
