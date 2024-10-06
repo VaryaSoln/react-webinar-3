@@ -3,7 +3,7 @@ import StoreModule from "../module";
 class AuthState extends StoreModule {
     initState() {
         return {
-            authorized: false,
+            authorized: sessionStorage.getItem("token")? true : false,
             error: "",
             token: "",
             user: null,
@@ -19,6 +19,7 @@ class AuthState extends StoreModule {
                 body: JSON.stringify({ login: login, password: password })
             });
             const json = await response.json();
+            sessionStorage.setItem('token', json.result.token);
             this.setState({
                 ...this.getState(),
                 authorized: true,
@@ -37,6 +38,14 @@ class AuthState extends StoreModule {
 
     async exit(){
         console.log("exit");
+        sessionStorage.removeItem('token');
+        await fetch("/api/v1/users/sign", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                'X-Token': sessionStorage.getItem('token'),
+            },
+        });
         this.setState({
             ...this.getState(),
             authorized: false,

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import useSelector from '../hooks/use-selector';
 import Main from './main';
 import Basket from './basket';
@@ -12,19 +12,22 @@ import Profile from './profile';
  * Маршрутизация по страницам и модалкам
  */
 function App() {
-  const activeModal = useSelector(state => state.modals.name);
+  const selector = useSelector(state => ({
+    modals: state.modals.name,
+    authorized: state.auth.authorized,
+  }));
 
   return (
     <>
       <Routes>
         <Route path={''} element={<Main />} />
         <Route path={'/articles/:id'} element={<Article />} />
-        <Route path={'/login'} element={<Login />} />
-        <Route path={'/profile'} element={<Profile />} />
+        {selector.authorized ? (<Route path={'/login'} element={<Navigate to="/" />} />):(<Route path={'/login'} element={<Login />} />)}
+        {selector.authorized ? (<Route path={'/profile'} element={<Profile />} />):(<Route path={'/profile'} element={<Navigate to="/login" />} />)}
 
       </Routes>
 
-      {activeModal === 'basket' && <Basket />}
+      {selector.modals === 'basket' && <Basket />}
     </>
   );
 }

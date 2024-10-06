@@ -16,20 +16,10 @@ function CatalogFilter() {
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
     category: state.catalog.params.category,
+    categoryList: state.category.categoryList,
   }));
 
-  const [categoryList, setCategoryList] = useState([]);
-
-  async function load() {
-    const response = await fetch(`/api/v1/categories?fields=_id,title,parent(_id)&limit=*`);
-    const json = await response.json();
-    const categories =  json.result.items.map((item) => {
-      return { value: item._id, title: item.title };
-    });
-    categories.unshift({value: "all", title: "Все"});
-    setCategoryList(categories);
-  };
-  useEffect(() => { load() }, []);
+  useEffect(() => { store.actions.category.load()}, []);
 
   const callbacks = {
     // Сортировка
@@ -52,22 +42,15 @@ function CatalogFilter() {
       ],
       [],
     ),
-    /* category: useMemo(
-      () => [
-        { value: 'category1', title: 'Все' },
-        { value: 'category2', title: 'Электроника' },
-        { value: 'category3', title: 'Телефоны' },
-        { value: 'category4', title: 'Компьютеры' },
-      ],
-      [],
-    ), */
+   
   };
 
   const { t } = useTranslate();
-
+  console.log("преямо перед рендерингом");
+  console.log(select.CategoryList);
   return (
     <SideLayout padding="medium">
-      <Select options={categoryList} value={select.category} onChange={callbacks.onCategory} />
+      <Select options={select.categoryList} value={select.category} onChange={callbacks.onCategory} />
       <Select options={options.sort} value={select.sort} onChange={callbacks.onSort} />
       <Input
         value={select.query}
