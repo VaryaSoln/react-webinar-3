@@ -5,6 +5,8 @@ import CommentTitle from '../../components/comment-title';
 import CommentsLayout from '../../components/comments-layout';
 import { useSelector as useSelectorRedux } from 'react-redux';
 import shallowequal from 'shallowequal';
+import { useDispatch } from 'react-redux';
+import commentsActions from '../../store-redux/comments/actions';
 
 function Comments() {
 
@@ -19,7 +21,12 @@ function Comments() {
     shallowequal,
   );
 
-    console.log(selector.newComment);
+  const dispatch = useDispatch();
+  const callbacks = {
+    onAnswer: (id) => { dispatch(commentsActions.answer(id)) },
+  }
+
+  console.log(selector.newComment);
   return (
     <CommentsLayout >
       <CommentTitle count={selector.count} />
@@ -30,10 +37,11 @@ function Comments() {
           commentDate={item.dateCreate}
           commentText={item.text}
           commentEdit={item._id == selector.newComment}
+          onAnswer={() => { callbacks.onAnswer(item._id) }}
         />)
 
       })}
-      {selector.newComment === null ? (<CommentEdit answer={false} />):(<></>)}
+      {selector.newComment === null ? (<CommentEdit answer={false} />) : (<></>)}
 
     </CommentsLayout>
   );

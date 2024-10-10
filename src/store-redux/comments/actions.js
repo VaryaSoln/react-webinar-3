@@ -23,4 +23,7 @@ export default {
         }
       };
     },
+    answer: id =>{
+      return { type: 'comments/answer', payload: { id } };
+    }
   };

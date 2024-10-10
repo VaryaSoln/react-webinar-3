@@ -3,7 +3,7 @@ import './style.css';
 import CommentTitle from '../comment-title';
 import CommentEdit from '../comment-edit';
 
-function Comment({user, commentDate, commentText, commentEdit  }) {
+function Comment({user, commentDate, commentText, commentEdit, onAnswer  }) {
     return (
         <div className="Comment">
             <div className="Comment_wrapper">
@@ -13,7 +13,7 @@ function Comment({user, commentDate, commentText, commentEdit  }) {
             <div className="Comment_text">
                {commentText}
             </div>
-            <a href="url"className="Comment_answer">Ответить</a>
+            <div className="Comment_answer" onClick={onAnswer}>Ответить</div>
             {commentEdit && (<CommentEdit answer={true}/>)}
 
         </div>

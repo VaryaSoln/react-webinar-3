@@ -17,7 +17,9 @@ function reducer(state = initialState, action) {
 
     case 'comments/load-error':
       return { ...state, comments: {}, waiting: false }; //@todo текст ошибки сохранять?
-
+ 
+    case 'comments/answer':
+        return { ...state, newComment: action.payload.id }; 
     default:
       // Нет изменений
       return state;
