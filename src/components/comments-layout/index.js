@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { cn as bem } from '@bem-react/classname';
 import './style.css';
 
-function SideLayout({ children, side, padding }) {
-  const cn = bem('SideLayout');
+function CommentsLayout({ children }) {
+  const cn = bem('CommentsLayout');
 
   return (
-    <div className={cn({ side, padding })}>
+    <div className={cn()}>
       {React.Children.map(children, child => (
         <div key={child.key} className={cn('item')}>
           {child}
@@ -17,10 +17,8 @@ function SideLayout({ children, side, padding }) {
   );
 }
 
-SideLayout.propTypes = {
+CommentsLayout.propTypes = {
   children: PropTypes.node,
-  side: PropTypes.oneOf(['start', 'end', 'between']),
-  padding: PropTypes.oneOf(['small', 'medium']),
 };
 
-export default memo(SideLayout);
+export default memo(CommentsLayout);
