@@ -1,3 +1,6 @@
+import listToTree from "../../utils/list-to-tree";
+import treeToList from "../../utils/tree-to-list";
+
 export default {
     /**
      * Загрузка комментариев
@@ -6,17 +9,16 @@ export default {
      */
     load: id => {
       return async (dispatch, getState, services) => {
-        // Сброс текущего товара и установка признака ожидания загрузки
+        // признак ожидания загрузки
         dispatch({ type: 'comments/load-start' });
   
         try {
           const res = await services.api.request({
             url: `/api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${id}`,
           });
-          // Товар загружен успешно
-          console.log(`Варя: комменты с сервера`);
-          console.log(res);
-          dispatch({ type: 'comments/load-success', payload: { items: res.data.result.items, count: res.data.result.count } });
+          
+          // Комментарии загружены успешно
+          dispatch({ type: 'comments/load-success', payload: { items: listToTree(res.data.result.items)[0].children, count: res.data.result.count } });
         } catch (e) {
           //Ошибка загрузки
           dispatch({ type: 'comments/load-error' });
@@ -25,5 +27,8 @@ export default {
     },
     answer: id =>{
       return { type: 'comments/answer', payload: { id } };
-    }
+    },
+    cancel: ()=>{
+      return { type: 'comments/cancel' }
+    },
   };

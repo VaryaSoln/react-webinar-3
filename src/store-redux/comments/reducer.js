@@ -2,7 +2,7 @@
 export const initialState = {
   items: [],
   count: 0,
-  newComment: "6707b55e87affd425bb45422",
+  newComment: null,
   waiting: false, // признак ожидания загрузки
 };
 
@@ -17,9 +17,13 @@ function reducer(state = initialState, action) {
 
     case 'comments/load-error':
       return { ...state, comments: {}, waiting: false }; //@todo текст ошибки сохранять?
- 
+
     case 'comments/answer':
-        return { ...state, newComment: action.payload.id }; 
+      return { ...state, newComment: action.payload.id };
+
+    case 'comments/cancel':
+      return { ...state, newComment: null };
+
     default:
       // Нет изменений
       return state;

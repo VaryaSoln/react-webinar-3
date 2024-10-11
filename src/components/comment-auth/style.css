@@ -1,0 +1,20 @@
+.CommentAuth {
+    font-family: Arial;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.4px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.CommentAuth_Enter {
+    color: #0087E9;
+    text-decoration:underline;
+    cursor: pointer;
+}
+
+.CommentAuth_Cancel{
+    color: #666666;
+    text-decoration:underline;
+    cursor: pointer;
+}
