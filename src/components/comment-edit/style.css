@@ -2,7 +2,9 @@
     display: flex;
     flex-direction: column;
     margin-top: 40px;
+
 }
+
 
 .CommentEdit_newComment {
     font-family: Arial;
@@ -18,16 +20,19 @@
     margin-bottom: 10px;
     height: 76px;
 }
-.CommentEdit_buttonWrapper{
+
+.CommentEdit_buttonWrapper {
     display: flex;
     column-gap: 10px;
 }
+
 .CommentEdit_button {
     height: 21px;
     width: 90px;
 
 }
-.CommentEdit_buttonCancel{
+
+.CommentEdit_buttonCancel {
     height: 21px;
     width: 67px;
 }

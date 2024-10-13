@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import Comment from "../../components/comment";
 import CommentEdit from "../../components/comment-edit";
 import CommentTitle from '../../components/comment-title';
@@ -29,11 +29,16 @@ function Comments() {
 
   const storeSelector = useSelector(state => ({
     exists: state.session.exists,
+    user: state.session.user,
   }));
 
   const dispatch = useDispatch();
 
   const services = useServices();
+
+  const refs = useRef(null);
+
+  useEffect(() => { refs.current?.scrollIntoView()})
 
   const callbacks = {
     onAnswer: (id) => { dispatch(commentsActions.answer(id)) },
@@ -80,6 +85,8 @@ function Comments() {
           level={item.level}
           onSend={callbacks.onSend}
           parent={item.parent._id}
+          authorized={item.author.profile.name === storeSelector.user.profile?.name}
+          refs={refs}
         />)
 
       })}
